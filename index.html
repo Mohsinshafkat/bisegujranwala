@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<style>
+  @font-face {
+    font-family: 'BetmMedium';
+    src: url('./BetmMedium.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GeorgiaCustom';
+    src: url('./Georgia-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  body {
+    font-family: 'GeorgiaCustom', "Times New Roman", serif;
+    color: #1a1a1a;
+    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+  }
+
+  /* Portrait Document Container (A4 Ratio) */
+  .page {
+    width: 794px;
+    height: 1123px;
+    padding: 45px 40px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    background-color: #ffffff;
+  }
+
+  /* Watermark Container Restricted inside Page Boundaries */
+ .watermark-container {
+    position: absolute;
+    top: -20%;
+    left: -15%;
+    width: 160%;
+    height: 160%;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.3;
+    transform: rotate(-30deg);
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* space-between ko flex-start se badal diya */
+    gap: 12px; /* lines ke darmayan gap yahan se control hoga */
+  }
+
+  .watermark-line {
+    font-size: 9px;
+    font-weight: ;
+    color: #3875A8;
+    white-space: nowrap;
+    letter-spacing: 1.5px;
+    line-height: 0.5;
+    margin: 0;
+  }
+
+  /* Main Document Content */
+  .content {
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Header Section */
+  .header-title {
+    font-family: 'BetmMedium', sans-serif;
+    color: #3875A8;
+    text-align: center;
+    font-size: 26px;
+    font-weight: normal;
+    margin: 0 0 5px 0;
+  }
+
+  .session-text {
+    font-family: 'BetmMedium', sans-serif;
+    color: #3875A8;
+    text-align: center;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+
+  .badge-container {
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .badge {
+    font-family: 'BetmMedium', sans-serif;
+    background-color: #3875A8;
+    color: #ffffff;
+    padding: 6px 45px;
+    border-radius: 100% / 100%;
+    display: inline-block;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .group-text {
+    font-family: 'BetmMedium', sans-serif;
+    text-align: center;
+    color: #3875A8;
+    font-size: 13px;
+    margin-bottom: 25px;
+  }
+
+  /* Student Details Section */
+  .student-info {
+    font-family: 'BetmMedium', sans-serif;
+    width: 100%;
+    margin-bottom: 20px;
+    font-size: 13px;
+    line-height: 1.8;
+    font-weight: normal;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bold {
+    font-family: 'BetmMedium', sans-serif;
+    font-weight: bold;
+  }
+
+  /* Marks Table */
+  table.marks-table {
+    font-family: 'GeorgiaCustom', serif;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  table.marks-table th {
+    background-color: #3875A8;
+    color: #ffffff;
+    padding: 6px 4px;
+    font-weight: normal;
+    text-align: center;
+    border: 1px solid #3875A8;
+  }
+
+  table.marks-table td {
+    padding: 6px 6px;
+    text-align: center;
+    border: none;
+  }
+
+  table.marks-table td.subject-name {
+    text-align: left;
+    text-transform: uppercase;
+  }
+
+  /* Zebra Striping */
+  table.marks-table tbody tr:nth-child(even) {
+    background-color: rgba(240, 244, 248, 0.75);
+  }
+
+  table.marks-table tbody tr:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.75);
+  }
+
+  /* Summary & Notification Rows */
+  .summary-row {
+    background-color: #3875A8 !important;
+    color: #ffffff;
+    font-weight: bold;
+  }
+
+  .summary-row td {
+    padding: 6px !important;
+  }
+
+  .status-passed {
+    font-family: 'GeorgiaCustom', serif;
+    text-align: center;
+    font-weight: bold;
+    margin: 25px 0;
+    font-size: 13px;
+  }
+
+  /* Footer & Notes */
+  .note-section {
+    font-family: 'GeorgiaCustom', serif;
+    font-size: 11px;
+    line-height: 1.5;
+    margin-top: 25px;
+  }
+
+  .note-title {
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 50px;
+    text-align: center;
+  }
+
+  .controller-title {
+    font-family: 'GeorgiaCustom', serif;
+    font-size: 12px;
+    font-weight: bold;
+    color: #000;
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+  <!-- Watermark Layer Inside Container (Dense Lines with Tight Spacing) -->
+  <div class="watermark-container">
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+    <div class="watermark-line">BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA BOARD OF INTERMEDIATE AND SECONDARY EDUCATION, GUJRANWALA</div>
+  </div>
+
+  <div class="content">
+    <h1 class="header-title">Board of Intermediate & Secondary Education, Gujranwala</h1>
+    <div class="session-text">Session : Annual 2018</div>
+    
+    <div class="badge-container">
+      <div class="badge">Marks Sheet HSSC (P-II)</div>
+    </div>
+    
+    <div class="group-text"><u>Group:</u> PRE-ENGINEERING</div>
+
+    <div class="student-info">
+      <div class="info-row">
+        <div><span class="bold">Roll No.:</span> 137540</div>
+        <div><span class="bold">Registration No.:</span> 2-2-1031222-16</div>
+      </div>
+      <div><span class="bold">Name:</span> MOHSIN ALI</div>
+      <div><span class="bold">Father's Name:</span> JAVAID ANWER MUGHAL</div>
+      <div><span class="bold">College:</span> 261029-PUNJAB COLLEGE FOR BOYS, SIALKOT</div>
+    </div>
+
+    <table class="marks-table">
+      <thead>
+        <tr>
+          <th rowspan="2" style="width: 5%;">Sr.</th>
+          <th rowspan="2" style="width: 35%; text-align: left;">Name of Subjects</th>
+          <th rowspan="2" style="width: 10%;">Max. Marks</th>
+          <th colspan="4" style="width: 35%;">Marks Obtained</th>
+          <th colspan="2" style="width: 15%;">status</th>
+        </tr>
+        <tr>
+          <th>11th</th>
+          <th>12th</th>
+          <th>Practical</th>
+          <th>Total</th>
+          <th>11th</th>
+          <th>12th</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td class="subject-name">Islamic Education</td>
+          <td>50</td>
+          <td>39</td>
+          <td>-</td>
+          <td>-</td>
+          <td>39</td>
+          <td>P</td>
+          <td>-</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td class="subject-name">Pakistan Studies</td>
+          <td>50</td>
+          <td>-</td>
+          <td>34</td>
+          <td>-</td>
+          <td>34</td>
+          <td>-</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td class="subject-name">Urdu</td>
+          <td>200</td>
+          <td>67</td>
+          <td>61</td>
+          <td>-</td>
+          <td>128</td>
+          <td>P</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td class="subject-name">English</td>
+          <td>200</td>
+          <td>66</td>
+          <td>64</td>
+          <td>-</td>
+          <td>130</td>
+          <td>P</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td class="subject-name">Physics</td>
+          <td>200</td>
+          <td>56</td>
+          <td>62</td>
+          <td>16</td>
+          <td>134</td>
+          <td>P</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td class="subject-name">Chemistry</td>
+          <td>200</td>
+          <td>53</td>
+          <td>60</td>
+          <td>17</td>
+          <td>130</td>
+          <td>P</td>
+          <td>P</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td class="subject-name">Mathematics</td>
+          <td>200</td>
+          <td>68</td>
+          <td>50</td>
+          <td>-</td>
+          <td>118</td>
+          <td>P</td>
+          <td>P</td>
+        </tr>
+        <tr class="summary-row">
+          <td colspan="2" style="text-align: right;">Total/Over All Grade:</td>
+          <td>1100</td>
+          <td colspan="3"></td>
+          <td>713</td>
+          <td>Grade:</td>
+          <td>B</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="status-passed">&lt; The candidate has Passed &gt;</div>
+
+    <div class="note-section">
+      <span class="note-title">Note:-</span><br>
+      i-This result gazette is issued provisionally, errors and omissions excepted, as a notice only. Any entry appearing in this notification does not in itself confer any right or privilege on a candidate for the grant of certificate which will be issued under the rules/regulations on the basis of the original record of the Board's office.<br><br>
+      <strong>It is an electronically generated provisional result intimation so there is no need for signature.</strong>
+    </div>
+
+    <div class="footer-container">
+      <div class="controller-title">CONTROLLER OF EXAMINATIONS</div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
