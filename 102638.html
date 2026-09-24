@@ -22,18 +22,19 @@
         .Grid .pgr td { border-width: 0; padding: 0 6px; border-left: solid 1px #666; font-weight: bold; color: #fff; line-height: 12px; }  
         .Grid .pgr a { color: Gray; text-decoration: none; }
         .Grid .pgr a:hover { color: #000; text-decoration: none; }
-.watermark {
+.watermark-image {
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) rotate(-35deg); /* Center aur rotate karne ke liye */
-  font-size: 3.5rem;
-  font-weight: plain;
-  color: rgba(500, 0, 0, 0.50); /* 0.15 Opacity se text halka/transparent dikhega */
-  user-select: none; /* Text select na ho sake */
-  pointer-events: none; /* Mouse click/hover ko bypass kar dega taake neeche wale content par click ho sake */
-  z-index: 9999; /* Page ke upar dikhne ke liye */
-  white-space: nowrap;
+  transform: translate(-50%, -50%);
+  opacity: 0.1; /* Image ki opacity halki karne ke liye (0.05 se 0.15 perfect hoti hai) */
+  pointer-events: none; /* User click na kar sake */
+  z-index: 9999;
+}
+
+.watermark-image img {
+  width: 400px; /* Apni marzi ka size set karein */
+  height: auto;
 }
         
     </style>
@@ -43,7 +44,9 @@
 <div class="aspNetHidden">
 <input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTg3NDAxNDIxNg9kFgICAw9kFhYCAw8PFgIeBFRleHQFIVNTQyBGaXJzdCBBbm51YWwgRXhhbWluYXRpb24gMjAyMmRkAgUPDxYCHwAFBjkzMDE3MmRkAgcPDxYCHwAFCUhBUSBOQVdBWmRkAgkPDxYCHwAFB1JFR1VMQVJkZAILDw8WAh8ABQM2MjJkZAINDw8WAh8ABQRQQVNTZGQCDw8PFgIfAAUJMjAxNCAtIDMxZGQCEQ8PFgQeB0VuYWJsZWRoHgdWaXNpYmxlaGRkAhMPDxYEHwFoHwJoZGQCFQ8PFgQfAWgfAmhkZAIXD2QWAgIBDxYCHgtfIUl0ZW1Db3VudAIIFhACAQ9kFhACAQ8PFgIfAAUURU5HTElTSCAoQ09NUFVMU09SWSlkZAIDDw8WAh8ABQI0OGRkAgUPDxYCHwAFAjIxZGQCBw8PFgIfAGVkZAIJDw8WAh8ABQI2OWRkAgsPDxYCHwAFBTQ2LjAwZGQCDQ8PFgIfAAUBRGRkAg8PDxYCHwAFBFBhc3NkZAICD2QWEAIBDw8WAh8ABRFVUkRVIChDT01QVUxTT1JZKWRkAgMPDxYCHwAFAjQ4ZGQCBQ8PFgIfAAUCMzRkZAIHDw8WAh8AZWRkAgkPDxYCHwAFAjgyZGQCCw8PFgIfAAUFNTUuMDNkZAINDw8WAh8ABQJEK2RkAg8PDxYCHwAFBFBhc3NkZAIDD2QWEAIBDw8WAh8ABRZJU0xBTUlZQVQgKENPTVBVTFNPUlkpZGQCAw8PFgIfAAUCMzJkZAIFDw8WAh8ABQIyN2RkAgcPDxYCHwBlZGQCCQ8PFgIfAAUCNTlkZAILDw8WAh8ABQU1OS4wMGRkAg0PDxYCHwAFAkQrZGQCDw8PFgIfAAUEUGFzc2RkAgQPZBYQAgEPDxYCHwAFHFBBS0lTVEFOIFNUVURJRVMoQ09NUFVMU09SWSlkZAIDDw8WAh8ABQIzMmRkAgUPDxYCHwAFAjE4ZGQCBw8PFgIfAGVkZAIJDw8WAh8ABQI1MGRkAgsPDxYCHwAFBTUwLjAwZGQCDQ8PFgIfAAUCRCtkZAIPDw8WAh8ABQRQYXNzZGQCBQ9kFhACAQ8PFgIfAAUYTUFUSEVNQVRJQ1MgKENPTVBVTFNPUlkpZGQCAw8PFgIfAAUCNDdkZAIFDw8WAh8ABQIzM2RkAgcPDxYCHwBlZGQCCQ8PFgIfAAUCODBkZAILDw8WAh8ABQU1My4zM2RkAg0PDxYCHwAFAkQrZGQCDw8PFgIfAAUEUGFzc2RkAgYPZBYQAgEPDxYCHwAFB1BIWVNJQ1NkZAIDDw8WAh8ABQI0NmRkAgUPDxYCHwAFAjM0ZGQCBw8PFgIfAAUCMjVkZAIJDw8WAh8ABQMxMDVkZAILDw8WAh8ABQU3MC4wMGRkAg0PDxYCHwAFAkMrZGQCDw8PFgIfAAUEUGFzc2RkAgcPZBYQAgEPDxYCHwAFCUNIRU1JU1RSWWRkAgMPDxYCHwAFAjM5ZGQCBQ8PFgIfAAUCMzBkZAIHDw8WAh8ABQIyMmRkAgkPDxYCHwAFAjkxZGQCCw8PFgIfAAUFNjAuNjdkZAINDw8WAh8ABQFDZGQCDw8PFgIfAAUEUGFzc2RkAggPZBYQAgEPDxYCHwAFEENPTVBVVEVSIFNDSUVOQ0VkZAIDDw8WAh8ABQIxN2RkAgUPDxYCHwAFAjI3ZGQCBw8PFgIfAAUCNDJkZAIJDw8WAh8ABQI4NmRkAgsPDxYCHwAFBTU3LjMzZGQCDQ8PFgIfAAUCRCtkZAIPDw8WAh8ABQRQYXNzZGRk3BxKbBtBf7aA2dD6YciLtWu+xXYugd9YcrfYpxg6gWo=">
 </div>
-<div class="watermark">Payment Not Cleared <br> +92 304 9196058 <br> Payment Not Cleared <br> +92 304 9196058</div>
+<div class="watermark-image">
+  <img src="notpaid.png" alt="Watermark">
+</div>
 <div class="aspNetHidden">
 
 	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="6E5003F7">
