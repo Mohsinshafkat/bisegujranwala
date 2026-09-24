@@ -26,14 +26,22 @@
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  opacity: 0.1; /* Image ki opacity halki karne ke liye (0.05 se 0.15 perfect hoti hai) */
-  pointer-events: none; /* User click na kar sake */
+  transform: translate(-50%, -50%) rotate(-20deg);
+  opacity: 0.5; /* 0.5 bohot dark tha, 0.15 watermark ke liye better hai */
+  pointer-events: none;
   z-index: 9999;
+  width: 80%; /* Screen ke hisab se responsive size */
+  max-width: 600px; /* Maximum kitna bara dikhe (is value ko barha sakte hain) */
+  text-align: center;
 }
 
 .watermark-image img {
-  width: 400px; /* Apni marzi ka size set karein */
+  width: 100%; /* Parent div ke hisab se image bari ho jayegi */
+  height: auto;
+}
+
+.watermark-image img {
+  width: 600px; /* Apni marzi ka size set karein */
   height: auto;
 }
         
